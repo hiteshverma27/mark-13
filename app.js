@@ -1,3 +1,7 @@
+var dateInputRef = document.querySelector('#bday-input');
+var showBtnRef = document.querySelector('#show-btn');
+var resultRef = document.querySelector("#result")
+
 function reverseString(string){
     var listOfChars = string.split('');
     var reverseListOfChars = listOfChars.reverse();
@@ -120,4 +124,23 @@ var date = {
     month:12,
     year: 2020
 }
-console.log(getNextPalindromeDate(date));
+function clickHandler(e){
+    var bdayString =dateInputRef.value;
+    if(bdayString !==""){
+        var listOfDate = bdayString.split('-');
+        var date = {
+            day: Number(listOfDate[2]),
+            month: Number(listOfDate[1]),
+            year: Number(listOfDate[0])
+        }
+        var isPalindrome = checkPalindromeForAllDateFormats(date);
+        if(isPalindrome){
+            resultRef.innerText = 'Yeah! your birthday is a palindrome!!🎉🎉'
+        }
+        else{
+            var [ctr, nextDate] = getNextPalindromeDate(date);
+            resultRef.innerText = `The next palindrome date is ${nextDate.day}-${nextDate.month}-${nextDate.year}, you missed it by ${ctr} days!🧲`
+        }
+    }
+}
+showBtnRef.addEventListener("click", clickHandler)
